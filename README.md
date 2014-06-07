@@ -1,51 +1,48 @@
-# apache2_reverseproxy-cookbook
+# apache2_reverseproxy Cookbook
 
-TODO: Enter the cookbook description here.
+Allows you to leverage Apache2 as a reverse proxy using mod_proxy.
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
-
-## Attributes
-
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['apache2_reverseproxy']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+* Should work on any platform supported by the [apache2 community cookbook](http://community.opscode.com/cookbooks/apache2).
 
 ## Usage
 
-### apache2_reverseproxy::default
+### apache2\_reverseproxy
 
-Include `apache2_reverseproxy` in your node's `run_list`:
+Manage a template resource for a reverse proxy virtualhost, and enable it with
+`apache_site`. This is commonly used for serving multiple applications from a
+single server, where each application ran on its own port.
 
-```json
-{
-  "run_list": [
-    "recipe[apache2_reverseproxy::default]"
-  ]
-}
+This definition includes some recipes to make sure the system is configured to
+have Apache and some sane default modules:
+
+* `apache2`
+* `apache2::mod_proxy`
+* `apache2::mod_proxy_http`
+
+It will then configure the template and enable or disable the site per the
+`enable` parameter.
+
+#### Parameters:
+
+* `name` - The name of the site. The template will be written to
+`"#{node['apache']['dir']}/sites-available/#{name}.conf"`
+* `servername` - The hostname that the virtualhost is listening to. See
+[ServerName](http://httpd.apache.org/docs/2.2/mod/core.html#servername).
+* `port` - The port the virtualhost is listening to. Defaults to `*``.
+* `proxypass_base` - The first argument passed to ProxyPass and
+ProxyPassReverse. Defaults to `/`.
+* `proxypass_target` - The full URL of the target application, including a
+trailing `/` The second argument passed to ProxyPass and ProxyPassReverse.
+
+#### Example:
+
+```ruby
+apache2_reverseproxy "jenkins" do
+  proxypass_base '/'
+  port '443'
+  proxypass_target 'http://127.0.0.1:8080/'
+  servername 'localhost'
+end
 ```
-
-## Contributing
-
-1. Fork the repository on Github
-2. Create a named feature branch (i.e. `add-new-recipe`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request
-
-## License and Authors
-
-Author:: Copyright Dropkey Pty Ltd (<nick@devflow.net>)
