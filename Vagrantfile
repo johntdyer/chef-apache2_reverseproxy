@@ -80,7 +80,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.run_list = [
         "recipe[apt]",
-        "recipe[apache2_reverseproxy::default]"
+        "recipe[apache2_reverseproxy::_test]"
     ]
   end
 end
