@@ -1,5 +1,7 @@
 <VirtualHost *:<%= @params[:port] %>>
+    <% if @params[:servername] %>
     ServerName <%= @params[:servername] %>
+    <% end %>
 
     ProxyPreserveHost On
 

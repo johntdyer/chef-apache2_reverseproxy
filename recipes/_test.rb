@@ -9,7 +9,6 @@ apache2_reverseproxy "test1" do
   proxypass_base '/test1'
   port '80'
   proxypass_target 'http://github.com/'
-  servername 'localhost'
 end
 
 apache2_reverseproxy "test2" do
