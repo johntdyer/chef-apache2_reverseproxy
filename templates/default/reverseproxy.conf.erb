@@ -1,0 +1,9 @@
+<VirtualHost *:<%= @params[:port] %>>
+    ServerName <%= @params[:servername] %>
+
+    ProxyPreserveHost On
+
+    ProxyPass <%= @params[:proxypass_base] %> <%= @params[:proxypass_target] %>
+    ProxyPassReverse <%= @params[:proxypass_base] %> <%= @params[:proxypass_target] %>
+
+</VirtualHost>
