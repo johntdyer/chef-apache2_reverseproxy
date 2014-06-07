@@ -3,7 +3,7 @@
 # Definition:: reverseproxy
 #
 
-define :apache2_reverseproxy, :template => 'reverseproxy.conf.erb', :local => false, :enable => true do
+define :apache2_reverseproxy, :port => '*', :proxypass_base => '/', :template => 'reverseproxy.conf.erb', :local => false, :enable => true do
 
   application_name = params[:name]
 
