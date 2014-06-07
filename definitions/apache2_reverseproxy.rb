@@ -7,6 +7,12 @@ define :apache2_reverseproxy, :port => '*', :proxypass_base => '/', :template =>
 
   application_name = params[:name]
 
+  # Ensure the correct proxy permissions are opened up.
+  node.set['apache']['proxy']['order'] = 'allow,deny'
+  node.set['apache']['proxy']['allow_from'] = 'all'
+  node.set['apache']['proxy']['deny_from'] = 'none'
+
+  # Ensure Apache is installed with mod_proxy and mod_proxy_http.
   include_recipe 'apache2'
   include_recipe 'apache2::mod_proxy'
   include_recipe 'apache2::mod_proxy_http'
