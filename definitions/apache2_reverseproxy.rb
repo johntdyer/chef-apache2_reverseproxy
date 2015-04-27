@@ -34,7 +34,7 @@ define :apache2_reverseproxy, :port => '*', :proxypass_base => '/', :template =>
   end
 
   site_enabled = params[:enable]
-  apache_site "#{params[:name]}.conf" do
+  apache_site "#{params[:name]}" do
     enable site_enabled
   end
 end
